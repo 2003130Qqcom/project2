@@ -21,6 +21,11 @@ tlias-parent/                        # 父 POM，统一依赖版本管理
 
 aliyun-oss-spring-boot-starter/      # 阿里云 OSS Starter（自定义）
 aliyun-oss-spring-boot-autoconfigure/# 阿里云 OSS 自动配置
+frontend/                            # 前端静态页面（Vite 构建）
+├── index.html
+├── favicon.ico
+├── assets/                          # JS/CSS/图片资源
+└── nginx.conf.example               # Nginx 反向代理配置示例
 ```
 
 ## 技术栈
@@ -35,6 +40,17 @@ aliyun-oss-spring-boot-autoconfigure/# 阿里云 OSS 自动配置
 | JWT (jjwt) | 0.12.6 | 无状态认证 |
 | PageHelper | 6.1.0 | 分页插件 |
 | Aliyun OSS | 3.17.4 | 文件存储 |
+
+## 前端说明
+
+项目包含一个 Vite 构建的 Vue 前端（在 `frontend/` 目录），使用 Nginx 部署：
+
+```bash
+# 启动 Nginx 托管前端（端口 90）
+nginx -c /path/to/nginx.conf
+```
+
+Nginx 配置将 `/api/` 请求反向代理到后端 `localhost:8080`，解决跨域问题。
 
 ## 功能模块
 
