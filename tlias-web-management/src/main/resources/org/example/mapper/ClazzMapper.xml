@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.mapper.ClazzMapper">
+
+    <!-- 条件分页查询班级（含班主任姓名、班级状态） -->
+    <select id="list" resultType="org.example.pojo.Clazz">
+<!--        select-->
+<!--        c.*,-->
+<!--        e.name as masterName,-->
+<!--        case-->
+<!--        when curdate() &lt; c.begin_date then '未开班'-->
+<!--        when curdate() between c.begin_date and c.end_date then '在读'-->
+<!--        else '已结课'-->
+<!--        end as status-->
+<!--        from clazz c-->
+<!--        left join emp e on c.master_id = e.id-->
+
+<!--        <where>-->
+<!--            <if test="name != null and name != ''">-->
+<!--                and c.name like concat('%',#{name},'%')-->
+<!--            </if>-->
+<!--            <if test="begin != null">-->
+<!--                and c.begin_date &gt;= #{begin}-->
+<!--            </if>-->
+<!--            <if test="end != null">-->
+<!--                and c.begin_date &lt;= #{end}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        order by c.update_time desc-->
+        select c.*, e.name as masterName
+        from clazz c
+        left join emp e on c.master_id = e.id
+        <where>
+            <if test="name != null and name != ''">
+                and c.name like concat('%', #{name}, '%')
+            </if>
+            <if test="begin != null and end != null">
+                and c.begin_date between #{begin} and #{end}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有班级（仅数据库原始字段，用于 /clazzs/list） -->
+    <select id="listAll" resultType="org.example.pojo.Clazz">
+        select * from clazz order by update_time desc
+    </select>
+
+    <!-- 根据ID查询班级（仅数据库原始字段） -->
+    <select id="getById" resultType="org.example.pojo.Clazz">
+        select * from clazz where id = #{id}
+    </select>
+
+    <!-- 新增班级 -->
+    <insert id="insert">
+        insert into clazz(name, room, begin_date, end_date, master_id, subject, create_time, update_time)
+        values(#{name}, #{room}, #{beginDate}, #{endDate}, #{masterId}, #{subject}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!-- 更新班级 -->
+    <update id="update">
+        update clazz
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="room != null and room != ''">room = #{room},</if>
+            <if test="beginDate != null">begin_date = #{beginDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="masterId != null">master_id = #{masterId},</if>
+            <if test="subject != null">subject = #{subject},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 删除班级 -->
+    <delete id="deleteById">
+        delete from clazz where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: tlias-web-management
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/tlias?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # ---- Redis 配置 ----
+  data:
+    redis:
+      host: 172.24.92.154
+      port: 6379
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+# 密钥通过环境变量配置，启动时设置：
+#   ALIYUN_OSS_ACCESS_KEY_ID=xxx
+#   ALIYUN_OSS_ACCESS_KEY_SECRET=xxx
+aliyun:
+  oss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    bucketName: java-ai20330
+    region: cn-beijing
+    accessKeyId: ${ALIYUN_OSS_ACCESS_KEY_ID:}
+    accessKeySecret: ${ALIYUN_OSS_ACCESS_KEY_SECRET:}
+
+mybatis:
+  mapper-locations: classpath:org/example/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: org.example.pojo
