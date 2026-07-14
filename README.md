@@ -145,6 +145,3 @@ http://localhost:8080
 | `ALIYUN_OSS_ACCESS_KEY_ID` | 阿里云 OSS AccessKey |
 | `ALIYUN_OSS_ACCESS_KEY_SECRET` | 阿里云 OSS AccessSecret |
 
-## 学习资源
-
-项目内附 `LEARNING_GUIDE.md` 学习指南，适合 Spring Boot + MyBatis 初学者按阶段学习。
